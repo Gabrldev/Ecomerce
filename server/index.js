@@ -12,6 +12,7 @@ import { register } from "./controllers/auth.js";
 import authRoutes from "./routes/auth.js";
 import { verifyToken } from "./middleware/auth.js";
 import usersRoutes from "./routes/users.js";
+import { createPost } from "./controllers/posts.js";
 
 /* config */
 
@@ -50,6 +51,7 @@ app.post('/auth/register',upload.single('picture'), register)
 /*routes auth*/
 app.use("/auth", authRoutes);
 app.use("/users", usersRoutes)
+app.use("/posts", verifyToken, upload.single("picture"), createPost);
 
 /*MONOGO DB */
 const port = process.env.PORT || 3001;
