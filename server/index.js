@@ -9,6 +9,9 @@ import path from "path";
 import { fileURLToPath } from "url";
 import mongoose from "mongoose";
 import { register } from "./controllers/auth.js";
+import authRoutes from "./routes/auth.js";
+import { verifyToken } from "./middleware/auth.js";
+import usersRoutes from "./routes/users.js";
 
 /* config */
 
@@ -28,6 +31,7 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
+
 /* file store */
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -41,6 +45,11 @@ const upload = multer({ storage });
 
 /* routes */
 app.post('/auth/register',upload.single('picture'), register)
+
+
+/*routes auth*/
+app.use("/auth", authRoutes);
+app.use("/users", usersRoutes)
 
 /*MONOGO DB */
 const port = process.env.PORT || 3001;
