@@ -8,7 +8,7 @@ import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
 import mongoose from "mongoose";
-import { register } from "./controllers/auth.js";
+import { checkJwt, register } from "./controllers/auth.js";
 import authRoutes from "./routes/auth.js";
 import { verifyToken } from "./middleware/auth.js";
 import usersRoutes from "./routes/users.js";
@@ -49,6 +49,7 @@ app.post('/auth/register',upload.single('picture'), register)
 
 /*routes auth*/
 app.use("/auth", authRoutes);
+app.use('/checkjwt', checkJwt)
 app.use("/users", usersRoutes)
 app.use("/posts", verifyToken, upload.single("picture"), createPost);
 

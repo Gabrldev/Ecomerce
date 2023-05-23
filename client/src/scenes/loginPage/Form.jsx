@@ -83,21 +83,21 @@ const Form = () => {
   }
 
   const login = async (values, onSubmitProps) => {
-    const loggedInResponse = await fetch('http://localhost:3001/auth/login', {
+    const response = await fetch('http://localhost:3001/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(values)
     })
-    const loggedIn = await loggedInResponse.json()
-    onSubmitProps.resetForm()
-    if (loggedIn) {
+    if (response.status === 200) {
+      const user = await response.json()
       dispatch(
         setLogin({
-          user: loggedIn.user,
-          token: loggedIn.token
+          token: user.token,
+          user: user.user
         })
       )
-      navigate('/home')
+    } else {
+      toast.error('Invalid email or password')
     }
   }
 
