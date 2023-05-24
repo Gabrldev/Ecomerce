@@ -4,9 +4,8 @@ import {
   AttachFileOutlined,
   GifBoxOutlined,
   ImageOutlined,
-  MicOutlined,
-  MoreHorizOutlined,
-  Padding
+  MicOutlined
+
 } from '@mui/icons-material'
 
 import {
@@ -16,8 +15,7 @@ import {
   InputBase,
   useTheme,
   Button,
-  IconButton,
-  useMediaQuery
+  IconButton
 } from '@mui/material'
 import FlexBetween from '../../components/Flexbetween'
 import Dropzone from 'react-dropzone'
@@ -34,9 +32,9 @@ function MyPostsWidget ({ picturePath }) {
   const [post, setPost] = useState('')
   const { _id } = useSelector((state) => state.user)
   const token = useSelector((state) => state.token)
-  const isMobile = useMediaQuery('(min-width:1000px)')
   const mediumMain = palette.neutral.mediumMain
   const medium = palette.neutral.medium
+  console.log(post)
 
   const handlePost = async () => {
     const formData = new FormData()
@@ -119,13 +117,39 @@ function MyPostsWidget ({ picturePath }) {
       )}
       <Divider sx={{ margin: '1.25rem 0' }} />
       <FlexBetween>
+        <FlexBetween gap='0.25rem' onClick={() => setIsImage(!isImage)} sx={{ '&:hover': { cursor: 'pointer' } }}>
+          <ImageOutlined sx={{ color: mediumMain }} />
+          <Typography sx={{ color: mediumMain }}>Photo</Typography>
+        </FlexBetween>
+        <FlexBetween gap='0.25rem' sx={{ '&:hover': { cursor: 'pointer' } }}>
+          <GifBoxOutlined sx={{ color: mediumMain }} />
+          <Typography sx={{ color: mediumMain }}>Gif</Typography>
+        </FlexBetween>
+        <FlexBetween gap='0.25rem' sx={{ '&:hover': { cursor: 'pointer' } }}>
+          <MicOutlined sx={{ color: mediumMain }} />
+          <Typography sx={{ color: mediumMain }}>Audio</Typography>
+        </FlexBetween>
+        <FlexBetween gap='0.25rem' sx={{ '&:hover': { cursor: 'pointer' } }}>
+          <AttachFileOutlined sx={{ color: mediumMain }} />
+          <Typography sx={{ color: mediumMain }}>File</Typography>
+        </FlexBetween>
         <Button
-          onClick={() => setIsImage(!isImage)}
+          disabled={!post && !image}
           variant='contained'
-        >Post
+          sx={{
+            backgroundColor: palette.primary.main,
+            color: palette.neutral.light,
+            borderRadius: '2rem',
+            padding: '0.5rem 2rem',
+            '&:hover': {
+              backgroundColor: palette.primary.main
+            }
+          }}
+          onClick={handlePost}
+        >
+          Post
         </Button>
       </FlexBetween>
-
     </WidgetWrapper>
   )
 }
