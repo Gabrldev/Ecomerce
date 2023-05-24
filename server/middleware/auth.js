@@ -1,21 +1,21 @@
 import jwt from "jsonwebtoken";
-import { httpError } from "../utils/HttpError.js";
 
 export const verifyToken = async (req, res, next) => {
   try {
-    let token = req.headers('Authorization');
-    if(!token){
-        return res.status(403).send({message: "no token provided"})
-    }
-    if(token.startsWith('Bearer ')){
-        token = token.slice(7, token.length).trimLeft();
+    let token = req.header("Authorization");
+
+    if (!token) {
+      return res.status(403).send("Access Denied");
     }
 
-    const verify = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = verify;
+    if (token.startsWith("Bearer ")) {
+      token = token.slice(7, token.length).trimLeft();
+    }
+
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = verified;
     next();
-
-  } catch (error) {
-    httpError(res, error, 500);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };

@@ -1,10 +1,33 @@
 import Navbar from '../navbar'
-import { Box } from '@mui/material'
+import { Box, useMediaQuery } from '@mui/material'
+import UserWidget from '../widget/UserWidget'
+import { useSelector } from 'react-redux'
+import MyPostsWidget from '../widget/MyPostsWidget'
+
 const HomePage = () => {
+  const { _id, picturePath } = useSelector((state) => state.user)
+  const isMobile = useMediaQuery('(min-width:1000px)')
   return (
     <Box>
       <Navbar />
-      <h1>Home Page</h1>
+      <Box
+        width='100%'
+        padding='2rem 6%'
+        display={isMobile ? 'flex' : 'block'}
+        gap='0.5rem'
+        justifyContent='space-between'
+      >
+        <Box flexBasis={isMobile ? '26%' : undefined}>
+          <UserWidget userId={_id} picturePath={picturePath} />
+        </Box>
+        <Box
+          flexBasis={isMobile ? '42%' : undefined}
+          mt={isMobile ? undefined : '2rem'}
+        >
+          <MyPostsWidget picturePath={picturePath} />
+
+        </Box>
+      </Box>
     </Box>
   )
 }

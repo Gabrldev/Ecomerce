@@ -1,15 +1,10 @@
 import { Box, Typography, useTheme, useMediaQuery } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
 import Form from './Form'
 const LoginPage = () => {
-  const navigate = useNavigate()
   const theme = useTheme()
   const isMobile = useMediaQuery('(min-width: 1000px)')
-  const primaryLight = theme.palette.primary.light
-  const background = theme.palette.background.default
   const alt = theme.palette.background.alt
-  const neutralLight = theme.palette.neutral.light
-  const dark = theme.palette.neutral.dark
+
   return (
     <Box>
       <Box width='100%' backgroundColor={alt} p='1rem 6%' textAlign='center'>
@@ -37,9 +32,7 @@ const LoginPage = () => {
         >
           Welcome to SocialApp
         </Typography>
-        <Form>
-
-        </Form>
+        <Form />
       </Box>
     </Box>
   )
