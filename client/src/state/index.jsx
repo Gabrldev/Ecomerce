@@ -4,7 +4,9 @@ const initialState = {
   mode: 'light',
   user: null,
   token: null,
-  posts: []
+  posts: [{
+    firstName: 'John'
+  }]
 }
 
 export const authSlice = createSlice({

@@ -55,19 +55,3 @@ export const login = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-
-/* CHECKING JWT */
-export const checkJwt = async (req, res) => {
-  try {
-    const { token } = req.body;
-
-    const verfiy = jwt.verify(token, process.env.JWT_SECRET);
-    if (verfiy){
-      res.status(200).json({msg: "Valid JWT"})
-    }else{
-      res.status(400).json({msg: "Invalid JWT"})
-    }
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-}
